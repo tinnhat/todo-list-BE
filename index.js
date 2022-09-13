@@ -3,13 +3,15 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { router } from "./routes/routes.js";
 import { userRoutes } from "./routes/userRoutes.js";
+import { todoRoutes } from "./routes/todoRoutes.js";
 dotenv.config();
 const mongoString = process.env.DATABASE_URL;
 const app = express();
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(`/api`, router);
 app.use(`/user`, userRoutes);
+app.use(`/todo`, todoRoutes);
 
 mongoose.connect(mongoString);
 const database = mongoose.connection;

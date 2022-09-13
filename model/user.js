@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import bcrypt from "bcrypt";
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   username: {
@@ -24,4 +24,8 @@ const UserSchema = new Schema({
     default: Date.now(),
   },
 });
+UserSchema.methods.comparePassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
 export default mongoose.model("User", UserSchema);

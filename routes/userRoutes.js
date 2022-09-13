@@ -1,23 +1,28 @@
 import express from "express";
 import {
-  RegisterUser,
+  DeleteUser,
   GetAllUsers,
   GetUserById,
+  RegisterUser,
+  SignIn,
   UpdateUser,
-  DeleteUser,
 } from "../controller/user.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 export const userRoutes = express.Router();
 // register user
 userRoutes.post("/register", RegisterUser);
+//sign in
+userRoutes.post("/signin", SignIn);
 
 //getAll user
-userRoutes.get("/getAll", GetAllUsers);
+userRoutes.get("/getAll", verifyToken, GetAllUsers);
 
 //Get by ID Method
-userRoutes.get("/getOne/:id", GetUserById);
+userRoutes.get("/getOne/:id", verifyToken, GetUserById);
 
 //Update by ID Method
-userRoutes.patch("/update/:id", UpdateUser);
+userRoutes.patch("/update/:id", verifyToken, UpdateUser);
 
 //Delete by ID Method
-userRoutes.delete("/delete/:id", DeleteUser);
+userRoutes.delete("/delete/:id", verifyToken, DeleteUser);
+//

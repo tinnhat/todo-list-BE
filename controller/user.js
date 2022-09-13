@@ -1,5 +1,6 @@
 import User from "../model/user.js";
-
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 export const RegisterUser = (req, res) => {
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
@@ -13,17 +14,34 @@ export const RegisterUser = (req, res) => {
         password: req.body.password,
         phone: req.body.phone,
       });
-      newUser.save();
-      return res.status(200).json({ result: newUser });
+      newUser.password = bcrypt.hashSync(req.body.password, 10);
+      newUser.save((err, user) => {
+        if (err) {
+          return res.status(400).send({
+            message: err,
+          });
+        } else {
+          user.password = undefined;
+          return res.status(200).json({ result: newUser });
+        }
+      });
     }
   });
 };
 export const GetAllUsers = async (req, res) => {
+  // let jwtSecretKey = process.env.SERECT_KEY_SIGNATURE;
+  // console.log(token);
   try {
+    // const token = req.header("Authorization");
+    // const verified = jwt.verify(token, jwtSecretKey);
+    // if (verified) {
     const data = await User.find().select("-password");
     return res.status(200).json({ result: data });
+    // } else {
+    // return res.status(401).send(error);
+    // }
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(401).send(error);
   }
 };
 export const GetUserById = async (req, res) => {
@@ -53,4 +71,37 @@ export const DeleteUser = async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
+};
+export const SignIn = async (request, response) => {
+  const user = await User.findOne({ username: request.body.username });
+  if (!user)
+    return response.status(422).json({
+      message: "Username is not correct",
+      result: false,
+    });
+
+  const checkPassword = await bcrypt.compare(
+    request.body.password,
+    user.password
+  );
+
+  if (!checkPassword)
+    return response.status(422).json({
+      message: "Password is not correct",
+      result: false,
+    });
+  const token = jwt.sign({ user }, process.env.SERECT_KEY_SIGNATURE, {
+    expiresIn: 60 * 60 * 24, // 24 hours
+  });
+  return response.json({
+    message: "Login Successfully!",
+    result: true,
+    token: token,
+    user: {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      phone: user.phone,
+    },
+  });
 };
