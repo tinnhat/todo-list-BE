@@ -5,11 +5,13 @@ import {
   GetAllPosts,
   GetPostbyId,
   UpdatePost,
+  UpLoadFile,
 } from "../controller/index.js";
 import Model from "../model/model.js";
 export const router = express.Router();
 //Post Method
 router.post("/post", CreatePost);
+router.post("/uploadFile", UpLoadFile);
 
 //Get all Method
 router.get("/getAll", GetAllPosts);

@@ -1,6 +1,6 @@
-import User from "../model/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import User from "../model/user.js";
 export const RegisterUser = (req, res) => {
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
