@@ -92,6 +92,7 @@ export const SignIn = async (request, response) => {
     });
   const token = jwt.sign({ user }, process.env.SERECT_KEY_SIGNATURE, {
     expiresIn: 60 * 60 * 24, // 24 hours
+    // expiresIn: "120s", // 2 minutes (test)
   });
   return response.json({
     message: "Login Successfully!",

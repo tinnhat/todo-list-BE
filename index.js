@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { router } from "./routes/routes.js";
 import { userRoutes } from "./routes/userRoutes.js";
 import { todoRoutes } from "./routes/todoRoutes.js";
+import { mailRoutes } from "./routes/mailRoutes.js";
 dotenv.config();
 const mongoString = process.env.DATABASE_URL;
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(`/api`, router);
 app.use(`/user`, userRoutes);
 app.use(`/todo`, todoRoutes);
+app.use(`/email`, mailRoutes);
 
 mongoose.connect(mongoString);
 const database = mongoose.connection;

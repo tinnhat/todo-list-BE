@@ -1,7 +1,7 @@
-import Model from "../model/model.js";
 import formidable from "formidable";
 import fs from "fs";
-import path from "path";
+import Model from "../model/model.js";
+
 export const CreatePost = async (req, res) => {
   console.log(req);
   const data = new Model({
@@ -58,8 +58,10 @@ export const UpLoadFile = (req, res, next) => {
   const form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
     let oldpath = files.file.filepath;
-    let newpath = "./uploads/" + files.file.originalFilename;
-    var rawData = fs.readFileSync(oldpath);
+    // let newpath = "./uploads/" + files.file.originalFilename;
+    const arrName = files.file.originalFilename.split(".");
+    let newpath = "./uploads/" + Date.now() + "." + arrName[arrName.length - 1];
+    let rawData = fs.readFileSync(oldpath);
     fs.writeFile(newpath, rawData, function (err) {
       if (err) console.log(err);
       return res.send("Successfully uploaded");

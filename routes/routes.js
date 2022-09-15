@@ -7,10 +7,10 @@ import {
   UpdatePost,
   UpLoadFile,
 } from "../controller/index.js";
-import Model from "../model/model.js";
 export const router = express.Router();
 //Post Method
 router.post("/post", CreatePost);
+//upload files
 router.post("/uploadFile", UpLoadFile);
 
 //Get all Method
