@@ -1,8 +1,8 @@
 api đã tạo:
 
 //user
-register: "/user/signin"
-login: "/user/login"
+register: "/user/register"
+login: "/user/sigin"
 getAll: "user/getAll"
 getOne: "user/getOne/:id"
 update: "user/update/:id" (làm chức năng quên mật khẩu(gửi qua mail "/email/send"),đổi thông tin user)
