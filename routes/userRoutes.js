@@ -25,4 +25,4 @@ userRoutes.patch("/update/:id", verifyToken, UpdateUser);
 
 //Delete by ID Method
 userRoutes.delete("/delete/:id", verifyToken, DeleteUser);
-//
+//get file

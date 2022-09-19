@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
+  fullname: {
+    required: true,
+    type: String,
+  },
   username: {
     required: true,
     type: String,
@@ -22,6 +26,9 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now(),
+  },
+  avatar: {
+    type: String,
   },
 });
 UserSchema.methods.comparePassword = function (password) {
