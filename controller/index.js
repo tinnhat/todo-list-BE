@@ -3,10 +3,10 @@ import fs from "fs";
 import Post from "../model/post.js";
 
 export const CreatePost = async (req, res) => {
-  console.log(req);
   const data = new Post({
-    name: req.body.name,
-    age: req.body.age,
+    content: req.body.content,
+    author: req.body.author,
+    userid: req.body.userid,
   });
 
   try {

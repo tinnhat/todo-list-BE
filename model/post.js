@@ -7,7 +7,7 @@ const PostSchema = new Schema({
   },
   author: {
     required: true,
-    type: Boolean,
+    type: String,
   },
   userid: {
     type: String,
