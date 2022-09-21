@@ -13,6 +13,7 @@ export const RegisterUser = (req, res) => {
         email: req.body.email,
         password: req.body.password,
         phone: req.body.phone,
+        fullname: req.body.fullname,
       });
       newUser.password = bcrypt.hashSync(req.body.password, 10);
       newUser.save((err, user) => {
@@ -79,7 +80,6 @@ export const SignIn = async (request, response) => {
       message: "Username is not correct",
       result: false,
     });
-
   const checkPassword = await bcrypt.compare(
     request.body.password,
     user.password
@@ -103,6 +103,7 @@ export const SignIn = async (request, response) => {
       username: user.username,
       email: user.email,
       phone: user.phone,
+      fullname: user.fullname,
     },
   });
 };

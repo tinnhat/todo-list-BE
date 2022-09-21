@@ -19,7 +19,7 @@ export const GetAllTodos = async (req, res) => {
 };
 export const GetTodosbyId = async (req, res) => {
   try {
-    const data = await User.findById(req.params.id);
+    const data = await Todos.find({ userid: req.params.id });
     return res.status(200).json({ result: data });
   } catch (error) {
     return res.status(500).json({ message: error.message, result: false });

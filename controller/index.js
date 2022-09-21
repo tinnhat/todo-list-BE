@@ -24,9 +24,11 @@ export const GetAllPosts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const GetPostbyId = async (req, res) => {
   try {
-    const data = await Post.findById(req.params.id);
+    const data = await Post.find({ userid: req.params.id });
+
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
