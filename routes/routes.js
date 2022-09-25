@@ -6,14 +6,12 @@ import {
   GetPostbyId,
   UpdatePost,
   UpLoadFile,
-  GetFile,
 } from "../controller/index.js";
 export const router = express.Router();
 //Post Method
 router.post("/post", CreatePost);
 //upload files
 router.post("/uploadFile", UpLoadFile);
-router.get("/file/:name", GetFile);
 
 //Get all Method
 router.get("/getAll", GetAllPosts);

@@ -6,6 +6,7 @@ import {
   RegisterUser,
   SignIn,
   UpdateUser,
+  getProfile,
 } from "../controller/user.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 export const userRoutes = express.Router();
@@ -13,6 +14,7 @@ export const userRoutes = express.Router();
 userRoutes.post("/register", RegisterUser);
 //sign in
 userRoutes.post("/signin", SignIn);
+userRoutes.post("/profile", getProfile);
 
 //getAll user
 userRoutes.get("/getAll", verifyToken, GetAllUsers);

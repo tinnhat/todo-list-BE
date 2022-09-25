@@ -57,11 +57,14 @@ export const DeletePost = async (req, res) => {
 };
 
 export const UpLoadFile = (req, res, next) => {
+  console.log(req.body);
   const form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
+    console.log(files);
     let oldpath = files.file.filepath;
     const arrName = files.file.originalFilename.split(".");
-    let newpath = "./uploads/" + Date.now() + "." + arrName[arrName.length - 1];
+    const time = Date.now();
+    let newpath = "./uploads/" + time + "." + arrName[arrName.length - 1];
     let rawData = fs.readFileSync(oldpath);
     fs.writeFile(newpath, rawData, function (err) {
       if (err)
@@ -69,32 +72,17 @@ export const UpLoadFile = (req, res, next) => {
           result: false,
           message: err,
         });
+      const link =
+        req.protocol +
+        "://" +
+        req.get("host") +
+        `/file/${time + "." + arrName[arrName.length - 1]}`;
+      console.log(link);
       return res.status(200).json({
         result: true,
         message: "Uploaded successfully",
-      });
-    });
-  });
-};
-
-export const GetFile = (req, res) => {
-  let fileName = req.params.name;
-  fs.readFile(`./uploads/${fileName}`, function (err, image) {
-    if (err) {
-      // throw err;
-      res.status(500).json({
-        result: false,
-        message: err,
-      });
-    }
-    res.setHeader("Content-Type", "image/jpg");
-    //   //nối link
-    const link = req.protocol + "://" + req.get("host") + req.originalUrl;
-    res.status(200).json({
-      result: true,
-      message: {
         link: link,
-      },
+      });
     });
   });
 };
