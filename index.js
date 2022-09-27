@@ -9,6 +9,7 @@ import { mailRoutes } from "./routes/mailRoutes.js";
 import path from "path";
 import cors from "cors";
 dotenv.config();
+const PORT = process.env.PORT || 4000;
 const mongoString = process.env.DATABASE_URL;
 const app = express();
 app.use(cors());
@@ -32,6 +33,6 @@ database.once("connected", () => {
   console.log("Database Connected");
 });
 
-app.listen(8080, () => {
-  console.log(`Server Started at ${8080}`);
+app.listen(PORT, () => {
+  console.log(`Server Started at ${PORT}`);
 });
