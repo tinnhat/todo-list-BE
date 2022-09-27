@@ -15,6 +15,9 @@ const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(`/`, (req, res) => {
+  res.send(`Server Started at ${PORT}`);
+});
 
 app.use(`/api`, router);
 app.use(express.static("uploads"));
